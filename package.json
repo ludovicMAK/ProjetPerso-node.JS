@@ -1,0 +1,16 @@
+{
+  "name": "projetperso-node.js",
+  "version": "1.0.0",
+  "description": "Après avoir suivie la la playlist de getCodingKnowledge pour débuter nodeJs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongodb": "^5.7.0"
+  }
+}
