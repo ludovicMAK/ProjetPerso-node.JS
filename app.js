@@ -3,6 +3,7 @@ const { engine } = require("express-handlebars")
 const express = require('express')
 const app = express()
 const {ConnectionBd} = require('./src/services/connectionBd');
+const userModel = require('./src/models/user')
 app.engine('handlebars', engine());
 app.set('view engine','handlebars');
 //app.set('views',path.join(__dirname,"views"));
