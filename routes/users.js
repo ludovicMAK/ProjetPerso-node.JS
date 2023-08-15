@@ -6,4 +6,8 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
+router.get('/inscription',function(req,res,next){
+  res.render('inscription');
+})
+
 module.exports = router;
