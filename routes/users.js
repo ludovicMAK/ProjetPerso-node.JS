@@ -23,9 +23,8 @@ router.post('/inscription', async function(req,res,next){
       await user.save();
       res.status(201).send('bien créé');
   }catch(e){
-    res.status(404).send('erreur survenue');
+    res.status(400).send(e);
   }
-  
 })
 
 module.exports = router;
