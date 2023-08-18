@@ -13,7 +13,7 @@ router.get('/inscription',function(req,res,next){
   res.render('inscription');
 })
 
-router.post('/inscription', async function(req,res,next){
+router.get('/inscription', async function(req,res,next){
   console.log(req.body);
   try{
     if(req.body.password != req.body.passwordConf) throw ('les 2 mots de passe sont différents');
@@ -25,7 +25,7 @@ router.post('/inscription', async function(req,res,next){
       await user.save();
       res.status(201).send('bien créé');
   }catch(e){
-    res.status(400).send(e);
+    res.status(400).render('/inscription');
   }
 })
 
