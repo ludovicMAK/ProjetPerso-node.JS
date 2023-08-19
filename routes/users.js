@@ -3,10 +3,19 @@ var router = express.Router();
 const User = require('../models/usersModel');
 
 
+router.get('/connection', function(req, res, next) {
+  res.render('connection');
+});
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+router.post('/connection', async function(req, res, next) {
+  console.log(req.body);
+  try{
+    const user = await  User.findUser(req.body.email,req.body.password);
+    res.send(user)
+  }catch(e){
+    
+    res.status(400).render('connection',{error:e.message});
+  }
 });
 
 router.get('/inscription',function(req,res,next){
@@ -30,7 +39,10 @@ router.post('/inscription', async function(req,res,next){
       messageError = e.errors.password.properties.message;
     }else if(e?.keyPattern?.email){
       messageError = "Ce email est déjà utilisé";
+    }else{
+      messageError = e;
     }
+    console.log(e);
     res.status(400).render('inscription',{ error: messageError });
   }
 })
