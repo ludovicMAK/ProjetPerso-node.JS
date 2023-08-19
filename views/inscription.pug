@@ -2,9 +2,10 @@ doctype html
 html
   head
     title Formulaire d'Inscription
+    script(src='/javascripts/main.js')
   body
     h1 Formulaire d'Inscription
-    form(action="inscription", method="get")
+    form(action="inscription", method="post" ).formInscription
       label(for="nom") Nom :
       input(type="text", name="nom", required)
       br
@@ -21,4 +22,5 @@ html
       input(type="password", name="passwordConf", required)
       br
       button(type="submit") S'inscrire
-    script (href='/stylesheets/style.css')
+    p #{error}
+    
