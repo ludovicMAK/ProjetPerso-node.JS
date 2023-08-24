@@ -1,5 +1,6 @@
 const express = require("express");
 const mysql = require("mysql2");
+const bodyParser = require("body-parser");
 
 const app = express();
 const port = 3001;
@@ -11,8 +12,17 @@ const connection = mysql.createConnection({
   database: "auto_ecole",
 });
 
+app.use(bodyParser.json());
+
 app.get("/api", (req, res) => {
   res.json({ message: "Bonjour, c'est le serveur" });
+});
+
+app.post("/api/inscrire", (req, res) => {
+  const userData = req.body;
+  // Faites quelque chose avec les données, par exemple les enregistrer dans une base de données
+  console.log("Received registration data:", userData);
+  res.status(200).json({ message: "Registration successful" });
 });
 
 connection.connect((err) => {
