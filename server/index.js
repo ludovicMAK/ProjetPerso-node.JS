@@ -1,6 +1,7 @@
 const express = require("express");
 const mysql = require("mysql2");
 const bodyParser = require("body-parser");
+const bcrypt = require("bcrypt");
 
 const app = express();
 const port = 3001;
@@ -21,9 +22,10 @@ app.get("/api", (req, res) => {
 app.post("/api/inscrire", async (req, res) => {
   const { nom, prenom, sexe, date_de_naissance, adresse, code_postal, ville, telephone, email, password, login, roles = ["ROLE_ELEVE"] } = req.body;
   try {
+    const hashedPassword = await bcrypt.hash(password, 10);
     await db.promise().beginTransaction();
 
-    const [user] = await db.promise().query("INSERT INTO user (login, password, roles, email) VALUES (?, ?, ?, ?)", [login, password, JSON.stringify(roles), email]);
+    const [user] = await db.promise().query("INSERT INTO user (login, password, roles, email) VALUES (?, ?, ?, ?)", [login, hashedPassword, JSON.stringify(roles), email]);
 
     await db
       .promise()
@@ -48,6 +50,29 @@ app.post("/api/inscrire", async (req, res) => {
     res.status(500).json({ message: "L'utilisateur n'a pas pu être créé" });
   } finally {
     db.end();
+  }
+});
+
+app.post("/api/connexion", async (req, res) => {
+  const { login, password } = req.body;
+
+  try {
+    const [user] = await db.promise().query("SELECT * FROM user WHERE login = ?", [login]);
+
+    if (user.length === 0) {
+      return res.status(401).json({ message: "Invalid login credentials" });
+    }
+
+    const passwordMatch = await bcrypt.compare(password, user[0].password);
+
+    if (!passwordMatch) {
+      return res.status(401).json({ message: "Invalid login credentials" });
+    }
+
+    res.status(200).json({ message: "Login successful" });
+  } catch (error) {
+    console.error("Login failed:", error);
+    res.status(500).json({ message: "Login failed" });
   }
 });
 
