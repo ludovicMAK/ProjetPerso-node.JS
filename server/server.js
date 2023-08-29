@@ -96,6 +96,10 @@ const PORT = 3001;
 
 app.use(express.json());
 
+app.get("/api", (req, res) => {
+  res.json({ message: "Bonjour, c'est le serveur" });
+});
+
 app.use("/api", userRoutes);
 
 app.listen(PORT, () => {

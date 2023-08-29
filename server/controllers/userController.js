@@ -4,17 +4,17 @@ const User = require("../models/userModel");
 exports.createUser = async (req, res) => {
   try {
     const userId = await User.create(req.body);
-    res.status(201).json({ message: "utilisateur créé", userId });
+    res.status(201).json("utilisateur créé");
   } catch (error) {
-    res.status(400).json({ error: "Erreur lors de la création de l'utilisateur." });
+    res.status(400).json(error.message);
   }
 };
 
 exports.readUser = async (req, res) => {
   try {
     const userId = await User.read(req.body);
-    res.status(201).json({ message: "Vous êtes connecté", userId });
+    res.status(201).json("Vous êtes connecté");
   } catch (error) {
-    res.status(400).json({ error: "Erreur sur la connexion" });
+    res.status(400).json(error.message);
   }
 };

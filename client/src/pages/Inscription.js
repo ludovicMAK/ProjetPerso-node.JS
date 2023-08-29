@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Navigation from "../components/Navigation";
 import axios from "axios";
 
 const Inscription = () => {
@@ -15,6 +16,8 @@ const Inscription = () => {
     login: "",
     password: "",
   });
+  const [error, setError] = useState("");
+  const [succesMessage, setSuccesMessage] = useState("");
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -28,14 +31,18 @@ const Inscription = () => {
     event.preventDefault();
     try {
       const response = await axios.post("/api/inscrire", formData);
-      console.log(response.data);
+      setSuccesMessage(response.data);
     } catch (error) {
-      console.error("Error submitting registration:", error);
+      if (error.response.data) {
+        debugger;
+        setError(error.response.data);
+      }
     }
   };
 
   return (
     <div>
+      <Navigation />
       <h2>Inscription</h2>
       <form onSubmit={handleSubmit}>
         <div>
@@ -85,10 +92,12 @@ const Inscription = () => {
         </div>
         <div>
           <label htmlFor="password">Mot de passe:</label>
-          <input type="text" id="password" name="password" value={formData.password} onChange={handleInputChange} required />
+          <input type="password" id="password" name="password" value={formData.password} onChange={handleInputChange} required />
         </div>
         <button type="submit">S'enregistrer</button>
       </form>
+      {error && <p className="error-message">{error}</p>}
+      {succesMessage && <p className="succes-message">{succesMessage}</p>}
     </div>
   );
 };

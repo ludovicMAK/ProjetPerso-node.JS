@@ -1,5 +1,5 @@
 import React from "react";
-
+import Navigation from "../components/Navigation";
 const Home = () => {
   const [data, setData] = React.useState(null);
 
@@ -11,6 +11,7 @@ const Home = () => {
 
   return (
     <div className="App">
+      <Navigation />
       <header className="App-header">
         <p>{!data ? "Loading..." : data}</p>
       </header>
