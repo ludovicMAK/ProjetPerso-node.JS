@@ -60,6 +60,7 @@ class User {
       if (!passwordMatch) {
         throw new Error("Le mot de passe est incorrect");
       }
+      return user;
     } catch (error) {
       throw error;
     }

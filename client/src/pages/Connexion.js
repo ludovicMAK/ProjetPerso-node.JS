@@ -7,8 +7,7 @@ const Connexion = () => {
     login: "",
     password: "",
   });
-  const [error, setError] = useState("");
-  const [succesMessage, setSuccesMessage] = useState("");
+  const [errorMessage, setError] = useState("");
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -23,9 +22,10 @@ const Connexion = () => {
     try {
       debugger;
       const response = await axios.post("/api/connexion", formData);
-      setSuccesMessage(response.data);
+      window.location.replace(`/dashboard/${response.data[0].id}`);
     } catch (error) {
-      setError(error.response.data);
+      debugger;
+      setError(error.response.data.error);
     }
   };
   return (
@@ -44,8 +44,7 @@ const Connexion = () => {
         </div>
         <button type="submit">Se connecter</button>
       </form>
-      {error && <p className="error-message">{error}</p>}
-      {succesMessage && <p className="succes-message">{succesMessage}</p>}
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
     </div>
   );
 };

@@ -35,7 +35,7 @@ const Inscription = () => {
     } catch (error) {
       if (error.response.data) {
         debugger;
-        setError(error.response.data);
+        setError(error.response.data.error);
       }
     }
   };
