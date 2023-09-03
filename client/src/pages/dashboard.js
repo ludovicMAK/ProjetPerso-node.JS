@@ -1,8 +1,11 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
+import Navigation from "../components/Navigation";
 
-const dashboard = () => {
+const Dashboard = () => {
   return (
     <div>
+      <Navigation />
       <ul>
         <li>
           <NavLink className="nav-link" activeClassName="active" to="/profil">
@@ -10,7 +13,7 @@ const dashboard = () => {
           </NavLink>
         </li>
         <li>
-          <NavLink className="nav-link" activeClassName="active" to="/statique">
+          <NavLink className="nav-link" activeClassName="active" to="/statistique">
             Statistique
           </NavLink>
         </li>
@@ -20,7 +23,7 @@ const dashboard = () => {
           </NavLink>
         </li>
         <li>
-          <NavLink className="nav-link" activeClassName="active" to="/addLecon">
+          <NavLink className="nav-link" activeClassName="active" to="/ajouterLecon">
             Ajouter une leçon
           </NavLink>
         </li>
@@ -34,4 +37,4 @@ const dashboard = () => {
   );
 };
 
-export default dashboard;
+export default Dashboard;
