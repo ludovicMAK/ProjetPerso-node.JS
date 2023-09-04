@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Navigation from "../components/Navigation";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Inscription = () => {
@@ -17,8 +18,7 @@ const Inscription = () => {
     password: "",
   });
   const [error, setError] = useState("");
-  const [succesMessage, setSuccesMessage] = useState("");
-
+  const navigate = useNavigate();
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevData) => ({
@@ -31,10 +31,9 @@ const Inscription = () => {
     event.preventDefault();
     try {
       const response = await axios.post("/api/inscrire", formData);
-      setSuccesMessage(response.data);
+      navigate("/connexion", { state: { message: response.data } });
     } catch (error) {
       if (error.response.data) {
-        debugger;
         setError(error.response.data.error);
       }
     }
@@ -97,7 +96,6 @@ const Inscription = () => {
         <button type="submit">S'enregistrer</button>
       </form>
       {error && <p className="error-message">{error}</p>}
-      {succesMessage && <p className="succes-message">{succesMessage}</p>}
     </div>
   );
 };

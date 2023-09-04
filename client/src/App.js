@@ -20,7 +20,7 @@ function App() {
         <Route path="/planning" element={<Planning />} />
         <Route path="/profil" element={<Profil />} />
         <Route path="/statistique" element={<Statistique />} />
-        <Route path="/dashboard/:id" element={<Dashboard />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="*" element={<Home />} />
       </Routes>
     </BrowserRouter>

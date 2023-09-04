@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const validator = require("validator");
 
 class User {
-  static async create(info) {
+  static async createUser(info) {
     const { nom, prenom, sexe, date_de_naissance, adresse, code_postal, ville, telephone, email, password, login, roles = ["ROLE_ELEVE"] } = info;
 
     const [existeLogin] = await db.promise().query("SELECT * FROM user WHERE login = ?", [login]);
@@ -41,12 +41,10 @@ class User {
       } catch (error) {
         await db.promise().rollback();
         throw error;
-      } finally {
-        db.end();
       }
     }
   }
-  static async read(info) {
+  static async readUserByLoginAndMdp(info) {
     const { login, password } = info;
 
     try {
@@ -60,7 +58,7 @@ class User {
       if (!passwordMatch) {
         throw new Error("Le mot de passe est incorrect");
       }
-      return user;
+      return user[0].id;
     } catch (error) {
       throw error;
     }
